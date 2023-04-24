@@ -1,5 +1,8 @@
 @import './common';
 @import './example';
+@import '~node_modules/modern-normalize/modern-normalize.css';
+
+
 
 .search-form{
     outline: 1px solid red;
@@ -8,7 +11,7 @@
     padding: 10px;
     background-color: rgb(0, 60, 255);
 }
-.button{
+button{
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -22,13 +25,25 @@
     gap: 30px;
 }
 .photo-card{
-  
-   flex-basis: calc((100% - 90px)/4);
+  outline: 1px solid red;
+   flex-basis: calc((100% - 90px) / 4);
    height: 260px;
 }
-.img{
+.photo-card-link img{
+    outline: 1px solid black;
     display: block;
     max-width: 100%;
-//    object-fit: scale-down;
-   
+    // height: auto;
+    height: 200px;
+    object-fit: cover;
+} 
+.info{
+outline: 1px solid blue;
+display: flex;
+}
+.info-item{
+    display: flex;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 15px;
 }
