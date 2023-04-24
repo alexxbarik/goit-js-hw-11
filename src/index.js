@@ -32,7 +32,8 @@ if(res.hits.length === 0){
     Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
     return;
 }else{
-    galleryEl.innerHTML = makeCard(res.hits);
+    // galleryEl.innerHTML = makeCard(res.hits);
+    makeCard(res.hits);
     simpleLightbox.refresh(); 
 }
 
@@ -40,10 +41,10 @@ if(res.hits.length === 0){
 
 
 function makeCard(res){
-    return res.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => 
+    const markup =res.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => 
     `
     <div class="photo-card">
-    < a href ="${largeImageURL}"><img src="${webformatURL}" alt="${tags}" loading="lazy" /></a>
+    <a href =${largeImageURL}><img src=${webformatURL} alt="${tags}" loading="lazy" /></a>
     <div class="info">
       <p class="info-item">
         <b>likes:${likes}</b>
@@ -60,12 +61,15 @@ function makeCard(res){
     </div>
   </div>
   `).join(``);
+  galleryEl.insertAdjacentHTML('beforeend', markup)
 }
 
 async function onLoadMoreBtnClick(){
     page += 1;
     const res = await fetchQuery(query, page)
-            galleryEl.innerHTML = makeCard(res.hits);
+            // galleryEl.innerHTML = makeCard(res.hits);
+            makeCard(res.hits);
+            simpleLightbox.refresh(); 
           
 }
 
