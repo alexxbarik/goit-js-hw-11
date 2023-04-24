@@ -6,7 +6,7 @@ import fetchQuery from "./fetchQuery";
 
 let query = "";
 let page = 1;
-let simpleLightbox = new SimpleLightbox("gallery a",{
+const lightbox = new SimpleLightbox(".gallery a",{
     captionDelay: 250,
 });
 
@@ -34,7 +34,7 @@ if(res.hits.length === 0){
 }else{
     // galleryEl.innerHTML = makeCard(res.hits);
     makeCard(res.hits);
-    simpleLightbox.refresh(); 
+    lightbox.refresh(); 
 }
 
 }
@@ -67,7 +67,7 @@ async function onLoadMoreBtnClick(){
     const res = await fetchQuery(query, page)
             // galleryEl.innerHTML = makeCard(res.hits);
             makeCard(res.hits);
-            simpleLightbox.refresh(); 
+            lightbox.refresh();  
           
 }
 
