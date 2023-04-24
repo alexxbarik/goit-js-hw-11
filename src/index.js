@@ -42,9 +42,8 @@ if(res.hits.length === 0){
 
 function makeCard(res){
     const markup =res.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => 
-    `
-    <div class="photo-card">
-    <a href =${largeImageURL}><img src=${webformatURL} alt="${tags}" loading="lazy" /></a>
+    `<div class="photo-card">
+    <a href=${largeImageURL}><img src=${webformatURL} alt="${tags}" loading="lazy" /></a>
     <div class="info">
       <p class="info-item">
         <b>likes:${likes}</b>
@@ -59,8 +58,7 @@ function makeCard(res){
         <b>downloads:${downloads}</b>
       </p>
     </div>
-  </div>
-  `).join(``);
+  </div>`).join("");
   galleryEl.insertAdjacentHTML('beforeend', markup)
 }
 
