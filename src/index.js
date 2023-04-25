@@ -16,12 +16,14 @@ const galleryEl = document.querySelector(`.gallery`);
 const loadMoreBtn = document.querySelector(`.load-more`);
 formEl.addEventListener(`submit`, onSearch);
 loadMoreBtn.addEventListener(`click`, onLoadMoreBtnClick);
+loadMoreBtn.classList.add(`is-hidden`);
 
 
 async function onSearch(event){
 event.preventDefault();
 clearHTML ();
 page = 1;
+loadMoreBtn.classList.add(`is-hidden`);
 query = event.currentTarget.elements.searchQuery.value.trim();
   if(!query){
     Notiflix.Notify.warning('please enter a query');
@@ -32,9 +34,10 @@ if(res.hits.length === 0){
     Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
     return;
 }else{
-    // galleryEl.innerHTML = makeCard(res.hits);
+    Notiflix.Notify.success(`Hooray! We found ${res.totalHits} totalHits images.`);
     makeCard(res.hits);
-    lightbox.refresh(); 
+    lightbox.refresh();
+    loadMoreBtn.classList.remove(`is-hidden`); 
 }
 
 }
@@ -46,16 +49,20 @@ function makeCard(res){
     <a class="photo-card-link"href=${largeImageURL}><img src=${webformatURL} alt="${tags}" loading="lazy" /></a>
     <div class="info">
       <p class="info-item">
-        <b>likes${likes}</b>
+        <b>likes</b>
+        ${likes}
       </p>
       <p class="info-item">
-        <b>views${views}</b>
+        <b>views</b>
+        ${views}
       </p>
       <p class="info-item">
-        <b>comments${comments}</b>
+        <b>comments</b>
+        ${comments}
       </p>
       <p class="info-item">
-        <b>downloads${downloads}</b>
+        <b>downloads</b>
+        ${downloads}
       </p>
     </div>
   </div>`).join("");
@@ -65,9 +72,14 @@ function makeCard(res){
 async function onLoadMoreBtnClick(){
     page += 1;
     const res = await fetchQuery(query, page)
-            // galleryEl.innerHTML = makeCard(res.hits);
             makeCard(res.hits);
-            lightbox.refresh();  
+            lightbox.refresh();
+            if (page * 40 > res.totalHits) {
+                loadMoreBtn.classList.add(`is-hidden`);
+                return Notiflix.Notify.failure(
+                  "We're sorry, but you've reached the end of search results."
+                );
+              } 
           
 }
 
